@@ -61,8 +61,8 @@ public class Runner {
 
 		Alliance alliance = new Alliance(lukeSkywalker, unitsR, planets.get(1));
 
-		System.out.println(empire);
-		System.out.println(alliance);
+		LOG.log(Level.INFO,"The empire: "+empire);
+		LOG.log(Level.INFO,"The alliance: "+alliance);
 
 		LOG.log(Level.INFO,
 				"      ________________.  ___     .______\r\n" + "     /                | /   \\    |   _  \\\r\n"
@@ -86,30 +86,30 @@ public class Runner {
 //		lukeSkywalker.attack(soldierE3);
 //		lukeSkywalker.forceAttack(darthVader);
 //	
-//		System.out.println(lukeSkywalker.equals(darthVader));//use of equals		
-//		System.out.println(lukeSkywalker.hashCode());//use of hashcode
+//		LOG.log(Level.INFO,lukeSkywalker.equals(darthVader));//use of equals		
+//		LOG.log(Level.INFO,lukeSkywalker.hashCode());//use of hashcode
 //		
 //		soldierE1.staminaRecover(-5);
 //		soldierE3.healthRecover(5);
 //		soldierE3.healthRecover(-5);
 //		Leader EmperorPalpatine = new Leader("", 400, 0, "Empire");
 
-		System.out.println("---------MAP---------");
+		LOG.log(Level.INFO,"---------MAP---------");
 		empire.addVehicle("AT-AT", 4);
 		empire.addVehicle("Tie Fighter", 20);
 		empire.printVehicles();
-		System.out.println("---------------------");
+		LOG.log(Level.INFO,"---------------------");
 		alliance.addVehicle("Millenium Falcon", 1);
 		alliance.addVehicle("X-Wing Fighter", 25);
 		alliance.deleteVehicle("X-Wing Fighter");
 		alliance.printVehicles();
-		System.out.println("---------------------");
-		System.out.println("Planets: ");
+		LOG.log(Level.INFO,"---------------------");
+		LOG.log(Level.INFO,"Planets: ");
 		for (Map.Entry<Integer, String> entry : planets.entrySet()) {
-			System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+			LOG.log(Level.INFO,entry.getKey() + ":" + entry.getValue().toString());
 		}
 
-		System.out.println("---------SET---------");
+		LOG.log(Level.INFO,"---------SET---------");
 		Robot c3po = new C3PO();
 		Robot r2d2 = new R2D2();
 		alliance.addRobot(r2d2);
@@ -117,25 +117,25 @@ public class Runner {
 		alliance.deleteRobot(r2d2);
 		alliance.printRobots();
 
-		System.out.println("---------CUSTOM LINKED LIST---------");
+		LOG.log(Level.INFO,"---------CUSTOM LINKED LIST---------");
 		empire.printUnits();
 		empire.deleteUnit(1);
 		empire.printUnits();
-		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("----------- THE FOLLOWING METHODS WERE ADAPTED TO THE CUSTOM LINKED LIST.------------");
-		System.out.println("-------------------------------------------------------------------------------------");
+		LOG.log(Level.INFO,"-------------------------------------------------------------------------------------");
+		LOG.log(Level.INFO,"----------- THE FOLLOWING METHODS WERE ADAPTED TO THE CUSTOM LINKED LIST.------------");
+		LOG.log(Level.INFO,"-------------------------------------------------------------------------------------");
 		empire.attackEnemyUnitsWithUnits(alliance);
 		empire.allUnitsRun();
 
-		System.out.println("---------QUEUE---------");
+		LOG.log(Level.INFO,"---------QUEUE---------");
 		famousQuotes.add("It's a trap!");
 		famousQuotes.add("May the force be with you.");
 		famousQuotes.add("No. I am your father.");
 		famousQuotes.add("Just for once, let me look on you with my own eyes.");
 		famousQuotes.add("Power! Unlimited power!");
-		System.out.println("Famous quotes: " + famousQuotes);
-		System.out.println("Is empty?: " + famousQuotes.isEmpty());
-		System.out.println("Peek: " + famousQuotes.peek());
+		LOG.log(Level.INFO,"Famous quotes: " + famousQuotes);
+		LOG.log(Level.INFO,"Is empty?: " + famousQuotes.isEmpty());
+		LOG.log(Level.INFO,"Peek: " + famousQuotes.peek());
 		famousQuotes.remove();
 	}
 }

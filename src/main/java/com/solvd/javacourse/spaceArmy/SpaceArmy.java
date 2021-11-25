@@ -40,14 +40,14 @@ public abstract class SpaceArmy {
 	}
 
 	public void printUnits() {
-		System.out.println(this.name + " Units: ");
+		LOG.log(Level.INFO,this.name + " Units: ");
 		this.units.show();
 	}
 
 	public void printRobots() {
-		System.out.println(this.name + " Robots: ");
+		LOG.log(Level.INFO,this.name + " Robots: ");
 		for (Robot robot : this.robots) {
-			System.out.println(robot);
+			LOG.log(Level.INFO,"Robot: "+robot);
 		}
 	}
 
@@ -68,9 +68,9 @@ public abstract class SpaceArmy {
 	}
 
 	public void printVehicles() {
-		System.out.println(this.name + " Vehicles and it's quantities: ");
+		LOG.log(Level.INFO,this.name + " Vehicles and it's quantities: ");
 		for (Map.Entry<String, Integer> entry : vehicles.entrySet()) {
-			System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+			LOG.log(Level.INFO,entry.getKey() + ":" + entry.getValue().toString());
 		}
 	}
 

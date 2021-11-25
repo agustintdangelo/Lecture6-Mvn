@@ -1,6 +1,10 @@
 package com.solvd.javacourse.generic;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class GenericCustomLinkedList<T> {
+	private final static Logger LOG = Logger.getLogger(GenericCustomLinkedList.class.getName());
 	Node<T> head;
 
 	public T get(int index) {
@@ -129,7 +133,7 @@ public class GenericCustomLinkedList<T> {
 	public void show() {
 		Node<T> currentNode = head;
 		if (currentNode == null) {
-			System.out.println("Linked list is empty");
+			LOG.log(Level.INFO, "Linked list is empty");
 		} else {
 //	        while(currentNode != null) {
 //	            System.out.print(currentNode.data + " ");
@@ -141,7 +145,7 @@ public class GenericCustomLinkedList<T> {
 
 	private void printingNodeRecursion(Node<T> currentNode) {
 		if (currentNode != null) {
-			System.out.println(currentNode.data);
+			LOG.log(Level.INFO, "Data: " + currentNode.data);
 			if (currentNode.next != null) {
 				printingNodeRecursion(currentNode.next);
 			}
