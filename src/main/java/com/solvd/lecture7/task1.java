@@ -16,7 +16,7 @@ public class task1 {
 	private final static Logger LOG = Logger.getLogger(StringUtilsMethods.class.getName());
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("files/java.txt");
+		File file = new File("src/main/resources/java.txt");
 		String words = FileUtils.readFileToString(file, "UTF-8");
 
 		// I remove the last sentence so when i run again the program it doesn't write

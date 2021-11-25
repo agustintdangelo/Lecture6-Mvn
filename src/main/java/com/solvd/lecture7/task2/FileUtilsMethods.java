@@ -8,8 +8,8 @@ import org.apache.commons.io.FileUtils;
 public class FileUtilsMethods {
 	public static void main(String[] args) throws IOException {
 		// Creating a file and deleting it.
-		File trashFile = new File("files/trashile");
-		File aliveFile = new File("files/survivourFile");
+		File trashFile = new File("src/main/resources/trashile");
+		File aliveFile = new File("src/main/resources/survivourFile");
 		String data = "This is the file that survives.";
 		byte[] bytes2 = data.getBytes();
 
@@ -19,7 +19,7 @@ public class FileUtilsMethods {
 		FileUtils.forceDelete(trashFile);
 
 		// copying file
-		File copyOfFile = new File("files/copy");
+		File copyOfFile = new File("src/main/resources/copy");
 		FileUtils.copyFile(aliveFile, copyOfFile, false);
 	}
 
