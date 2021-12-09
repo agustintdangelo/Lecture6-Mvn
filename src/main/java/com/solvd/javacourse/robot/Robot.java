@@ -14,9 +14,9 @@ public class Robot {
 	public void chargeBattery() {
 		if (battery < 100) {
 			this.battery = 100;
-			System.out.println( "Charging... \nCharging...\nThe battery is fully charged.");
+			System.out.println("Charging... \nCharging...\nThe battery is fully charged.");
 		} else {
-			System.out.println( "The battery is fully charged.");
+			System.out.println("The battery is fully charged.");
 		}
 	}
 
@@ -45,6 +45,5 @@ public class Robot {
 	public void talk() {
 		// TODO Auto-generated method stub
 	}
-	
-	
+
 }

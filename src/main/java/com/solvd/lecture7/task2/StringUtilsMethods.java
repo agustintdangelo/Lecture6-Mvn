@@ -15,11 +15,11 @@ public class StringUtilsMethods {
 		String space = StringUtils.SPACE;
 		String chop = "Hello!";
 
-		LOG.log(Level.INFO,"Java" + space + "is great.");
-		LOG.log(Level.INFO,"Is empty?" + StringUtils.isEmpty(empty));
-		LOG.log(Level.INFO,StringUtils.capitalize(capitalize));
-		LOG.log(Level.INFO,StringUtils.getDigits(digits));
-		LOG.log(Level.INFO,StringUtils.chop(chop));
+		LOG.log(Level.INFO, "Java" + space + "is great.");
+		LOG.log(Level.INFO, "Is empty?" + StringUtils.isEmpty(empty));
+		LOG.log(Level.INFO, StringUtils.capitalize(capitalize));
+		LOG.log(Level.INFO, StringUtils.getDigits(digits));
+		LOG.log(Level.INFO, StringUtils.chop(chop));
 
 	}
 }

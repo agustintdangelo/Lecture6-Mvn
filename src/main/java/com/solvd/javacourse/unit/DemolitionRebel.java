@@ -3,15 +3,18 @@ package com.solvd.javacourse.unit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.Side;
+
 public class DemolitionRebel extends Unit implements IDemolition {
 
 	private static final int DAMAGE = 50;
+	@SuppressWarnings("unused")
+	private static final int MAX_HEALTH = 100;
 	private static final int MISSILE_DAMAGE = 100;
 	private final static Logger LOG = Logger.getLogger(DemolitionRebel.class.getName());
 
-	public DemolitionRebel(int unitId) {
-		super(unitId);
-		this.side = "Alliance";
+	public DemolitionRebel(int unitId, Side side) {
+		super(unitId, side);
 	}
 
 	@Override
@@ -20,7 +23,8 @@ public class DemolitionRebel extends Unit implements IDemolition {
 			enemyUnit.setHealth(enemyUnit.getHealth() - DAMAGE);
 			this.stamina -= 40;
 //			System.out.println("The unit does " + DAMAGE + " damage to the enemy number: " + enemyUnit.getUnitId());
-			LOG.log(Level.INFO, "The unit does " +this.unitId+" "+ DAMAGE + " damage to the enemy number: " + enemyUnit.getUnitId());
+			LOG.log(Level.INFO, "The unit does " + this.unitId + " " + DAMAGE + " damage to the enemy number: "
+					+ enemyUnit.getUnitId());
 			if (enemyUnit.getHealth() <= 0) {
 				enemyUnit.setHealth(0);
 //				System.out.println("An enemy has been defeated!");

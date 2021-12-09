@@ -4,23 +4,29 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.Side;
 import com.solvd.javacourse.exception.*;
-
 
 public abstract class Unit implements IAttacker, IInformation {
 	private static final int DAMAGE = 20;
+	private static final int MAX_HEALTH = 100;
 	protected int health;
-	protected int stamina;
+	protected Integer stamina;
 	protected int unitId;
 	protected boolean isAlive;
-	protected String side;
+	protected Side side;
 	private final static Logger LOG = Logger.getLogger(Unit.class.getName());
 
-	public Unit(int unitId) {
+	public Unit(int unitId, Side side2) {
 		this.health = 100;
 		this.stamina = 100;
 		this.unitId = unitId;
 		this.isAlive = true;
+		this.side = side2;
+	}
+
+	public Side getSide() {
+		return side;
 	}
 
 	public int getUnitId() {
@@ -55,13 +61,31 @@ public abstract class Unit implements IAttacker, IInformation {
 		this.isAlive = isAlive;
 	}
 
-	public void staminaRecover(int stamina) throws StaminaNegativeException {
-		if (stamina < 0) {
-			throw new StaminaNegativeException();
-		} else {
-			this.stamina += stamina;
-		}
+	public int getMaxHealth() {
+		return MAX_HEALTH;
 	}
+
+// 
+//	public BiConsumer<Integer, Unit> staminaRecover = (s, u) -> {
+////		if(this.stamina<0) {
+////			throw new StaminaNegativeException();
+////		} else {
+//			u.setStamina(u.getStamina()+s);
+////		}
+//	};
+//	
+	public void staminaRecovery(Integer stamina) {
+//		this.staminaRecover(stamina, this);
+
+	}
+
+//	public void staminaRecover(int stamina) throws StaminaNegativeException {
+//		if (stamina < 0) {
+//			throw new StaminaNegativeException();
+//		} else {
+//			this.stamina += stamina;
+//		}
+//	}
 
 	public void healthRecover(int health) throws DeadUnitException, HealthNegativeException {
 
@@ -75,9 +99,9 @@ public abstract class Unit implements IAttacker, IInformation {
 				this.health += health;
 			}
 		} catch (HealthNegativeException e) {
-			LOG.log(Level.INFO,e.getMessage());
+			LOG.log(Level.INFO, e.getMessage());
 		} catch (DeadUnitException e) {
-			LOG.log(Level.INFO,e.getMessage());
+			LOG.log(Level.INFO, e.getMessage());
 		}
 
 	}
@@ -86,25 +110,26 @@ public abstract class Unit implements IAttacker, IInformation {
 		if (enemyUnit.health > 0) {
 			enemyUnit.health -= DAMAGE;
 			this.stamina -= 10;
-			LOG.log(Level.INFO,"The unit does "+this.unitId +" "+ DAMAGE + " damage to the enemy number: " + enemyUnit.getUnitId());
+			LOG.log(Level.INFO, "The unit " + this.unitId + " does " + DAMAGE + " damage to the enemy number: "
+					+ enemyUnit.getUnitId());
 			if (enemyUnit.health <= 0) {
-				LOG.log(Level.WARNING,"An enemy has been defeated!");
+				LOG.log(Level.WARNING, "An enemy has been defeated!");
 				enemyUnit.setHealth(0);
 				enemyUnit.setAlive(false);
 			}
-			LOG.log(Level.INFO,"The health of the enemy unit number " + enemyUnit.getUnitId() + " now is: "
+			LOG.log(Level.INFO, "The health of the enemy unit number " + enemyUnit.getUnitId() + " now is: "
 					+ enemyUnit.getHealth());
 		} else {
-			LOG.log(Level.INFO,"The enemy unit " + enemyUnit.unitId + " is dead so you can't attack it.");
+			LOG.log(Level.INFO, "The enemy unit " + enemyUnit.unitId + " is dead so you can't attack it.");
 		}
 	}
 
 	public void run() {
 		if (this.stamina > 0) {
 			this.stamina -= 20;
-			LOG.log(Level.INFO,"The unit " + this.getUnitId() + " runs and the stamina goes down by 20 points.");
+			LOG.log(Level.INFO, "The unit " + this.getUnitId() + " runs and the stamina goes down by 20 points.");
 		} else {
-			LOG.log(Level.INFO,"The unit " + this.getUnitId() + " doesn't have enough stamina");
+			LOG.log(Level.INFO, "The unit " + this.getUnitId() + " doesn't have enough stamina");
 		}
 	}
 
@@ -131,4 +156,5 @@ public abstract class Unit implements IAttacker, IInformation {
 		return "Unit [health=" + health + ", stamina=" + stamina + ", unitId=" + unitId + ", isAlive=" + isAlive
 				+ ", side=" + side + "]";
 	}
+
 }

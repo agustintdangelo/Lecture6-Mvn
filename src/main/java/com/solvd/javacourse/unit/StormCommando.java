@@ -3,15 +3,22 @@ package com.solvd.javacourse.unit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.Side;
+
 public class StormCommando extends Unit {
 
 	private final static Logger LOG = Logger.getLogger(StormCommando.class.getName());
-	
-	public StormCommando(int unitId) {
-		super(unitId);
+	private static final int MAX_HEALTH = 125;
+
+	public StormCommando(int unitId, Side side) {
+		super(unitId, side);
 		this.health = 125;
 		this.stamina = 125;
-		this.side = "Empire";
+	}
+
+	@Override
+	public int getMaxHealth() {
+		return MAX_HEALTH;
 	}
 
 	@Override

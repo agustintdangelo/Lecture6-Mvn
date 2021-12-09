@@ -3,14 +3,17 @@ package com.solvd.javacourse.unit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.Side;
+
 public class DemolitionTrooper extends Unit implements IDemolition {
 	private static final int DAMAGE = 70;
+	@SuppressWarnings("unused")
+	private static final int MAX_HEALTH = 100;
 	private static final int MISSILE_DAMAGE = 100;
 	private final static Logger LOG = Logger.getLogger(DemolitionTrooper.class.getName());
 
-	public DemolitionTrooper(int unitId) {
-		super(unitId);
-		this.side = "Empire";
+	public DemolitionTrooper(int unitId, Side side) {
+		super(unitId, side);
 	}
 
 	@Override

@@ -1,10 +1,11 @@
 package com.solvd.javacourse.unit;
 
+import com.solvd.javacourse.enums.Side;
+
 public class RebelTrooper extends Unit {
 
-	public RebelTrooper(int soldierId) {
-		super(soldierId);
-		this.side = "Alliance";
+	public RebelTrooper(int soldierId, Side side) {
+		super(soldierId, side);
 	}
 
 	@Override

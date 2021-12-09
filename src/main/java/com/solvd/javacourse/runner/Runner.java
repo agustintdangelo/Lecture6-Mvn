@@ -1,12 +1,17 @@
 package com.solvd.javacourse.runner;
 
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
-import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.EnumLeaders;
+import com.solvd.javacourse.enums.Planets;
+import com.solvd.javacourse.enums.Side;
+import com.solvd.javacourse.enums.SpaceArmyEnums;
+import com.solvd.javacourse.enums.SpaceShip;
 import com.solvd.javacourse.exception.DeadUnitException;
 import com.solvd.javacourse.exception.HealthNegativeException;
 import com.solvd.javacourse.exception.WrongNameException;
@@ -14,8 +19,7 @@ import com.solvd.javacourse.generic.GenericCustomLinkedList;
 import com.solvd.javacourse.robot.C3PO;
 import com.solvd.javacourse.robot.R2D2;
 import com.solvd.javacourse.robot.Robot;
-import com.solvd.javacourse.spaceArmy.Alliance;
-import com.solvd.javacourse.spaceArmy.Empire;
+import com.solvd.javacourse.spaceArmy.SpaceArmy;
 import com.solvd.javacourse.unit.DemolitionRebel;
 import com.solvd.javacourse.unit.DemolitionTrooper;
 import com.solvd.javacourse.unit.Leader;
@@ -27,42 +31,36 @@ import com.solvd.javacourse.unit.Unit;
 
 public class Runner {
 	private final static Logger LOG = Logger.getLogger(Runner.class.getName());
-	private static Map<Integer, String> planets = new TreeMap<>();
 	private static Queue<String> famousQuotes = new LinkedList<>();
 
 	public static void main(String[] args) throws DeadUnitException, HealthNegativeException, WrongNameException {
-		planets.put(1, "Tatooine");
-		planets.put(2, "Endor");
-		planets.put(3, "Hoth");
-		planets.put(4, "Corruscant");
 
-		Unit soldierE1 = new Stormtrooper(1);
-		Unit soldierE2 = new StormCommando(2);
-		Unit soldierE3 = new DemolitionTrooper(3);
+		Unit soldierE1 = new Stormtrooper(1, Side.EMPIRE);
+		Unit soldierE2 = new StormCommando(2, Side.EMPIRE);
+		Unit soldierE3 = new DemolitionTrooper(3, Side.EMPIRE);
 //		List<Unit> unitsE = new ArrayList<>();
 		GenericCustomLinkedList<Unit> unitsE = new GenericCustomLinkedList<Unit>();
 		unitsE.insert(soldierE1);
 		unitsE.insert(soldierE2);
 		unitsE.insert(soldierE3);
 
-		Leader darthVader = new Leader("Darth Vader", 400, 0, "Empire");
+		Leader darthVader = new Leader(EnumLeaders.DARTH_VADER, 400, 0, Side.EMPIRE);
 
-		Empire empire = new Empire(darthVader, unitsE, planets.get(1));
+		SpaceArmy empire = new SpaceArmy(SpaceArmyEnums.EMPIRE, darthVader, unitsE, Planets.HOTH);
 
-		Unit soldierR1 = new RebelTrooper(1);
-		Unit soldierR2 = new RebelCommando(2);
-		Unit soldierR3 = new DemolitionRebel(3);
+		Unit soldierR1 = new RebelTrooper(1, Side.ALLIANCE);
+		Unit soldierR2 = new RebelCommando(2, Side.ALLIANCE);
+		Unit soldierR3 = new DemolitionRebel(3, Side.ALLIANCE);
 		GenericCustomLinkedList<Unit> unitsR = new GenericCustomLinkedList<Unit>();
-		Leader lukeSkywalker = new Leader("Luke Skywalker", 600, 0, "Alliance");
+		Leader lukeSkywalker = new Leader(EnumLeaders.LUKE_SKYWALKER, 600, 0, Side.ALLIANCE);
 
 		unitsR.insert(soldierR1);
 		unitsR.insert(soldierR2);
 		unitsR.insert(soldierR3);
 
-		Alliance alliance = new Alliance(lukeSkywalker, unitsR, planets.get(1));
-
-		LOG.log(Level.INFO,"The empire: "+empire);
-		LOG.log(Level.INFO,"The alliance: "+alliance);
+		SpaceArmy alliance = new SpaceArmy(SpaceArmyEnums.ALLIANCE, lukeSkywalker, unitsR, Planets.CORRUSCANT);
+		LOG.log(Level.INFO, "The empire: " + empire);
+		LOG.log(Level.INFO, "The alliance: " + alliance);
 
 		LOG.log(Level.INFO,
 				"      ________________.  ___     .______\r\n" + "     /                | /   \\    |   _  \\\r\n"
@@ -77,65 +75,84 @@ public class Runner {
 						+ "    \\    /\\    / /  _____  \\ |  |\\  \\---)   |\r\n"
 						+ "     \\__/  \\__/ /__/     \\__\\|__| `._______/");
 
-//		alliance.attackEnemyUnitsWithUnits(empire);
-//		empire.travelToAnotherPlanet("Death Star");
-//		alliance.allUnitsRun();
-//		Unit soldierE4 = new Stormtrooper(4);
-//		empire.addUnit(soldierE4);
-//
-//		lukeSkywalker.attack(soldierE3);
-//		lukeSkywalker.forceAttack(darthVader);
-//	
-//		LOG.log(Level.INFO,lukeSkywalker.equals(darthVader));//use of equals		
-//		LOG.log(Level.INFO,lukeSkywalker.hashCode());//use of hashcode
-//		
-//		soldierE1.staminaRecover(-5);
-//		soldierE3.healthRecover(5);
-//		soldierE3.healthRecover(-5);
-//		Leader EmperorPalpatine = new Leader("", 400, 0, "Empire");
+		LOG.log(Level.INFO, "---------MAP---------");
 
-		LOG.log(Level.INFO,"---------MAP---------");
-		empire.addVehicle("AT-AT", 4);
-		empire.addVehicle("Tie Fighter", 20);
+		empire.addVehicle(SpaceShip.AT_AT, 4);
+		empire.addVehicle(SpaceShip.TIE_FIGHTER, 20);
+		empire.addVehicle(SpaceShip.AT_ST, 15);
 		empire.printVehicles();
-		LOG.log(Level.INFO,"---------------------");
-		alliance.addVehicle("Millenium Falcon", 1);
-		alliance.addVehicle("X-Wing Fighter", 25);
-		alliance.deleteVehicle("X-Wing Fighter");
+		LOG.log(Level.INFO, "---------------------");
+		alliance.addVehicle(SpaceShip.MILLENIUM_FALCON, 1);
+		alliance.addVehicle(SpaceShip.X_WING, 25);
 		alliance.printVehicles();
-		LOG.log(Level.INFO,"---------------------");
-		LOG.log(Level.INFO,"Planets: ");
-		for (Map.Entry<Integer, String> entry : planets.entrySet()) {
-			LOG.log(Level.INFO,entry.getKey() + ":" + entry.getValue().toString());
-		}
+		empire.vehicleWhichHasMaxQuantity();
 
-		LOG.log(Level.INFO,"---------SET---------");
+		// -----------SET------------
 		Robot c3po = new C3PO();
 		Robot r2d2 = new R2D2();
 		alliance.addRobot(r2d2);
 		alliance.addRobot(c3po);
-		alliance.deleteRobot(r2d2);
-		alliance.printRobots();
 
-		LOG.log(Level.INFO,"---------CUSTOM LINKED LIST---------");
-		empire.printUnits();
-		empire.deleteUnit(1);
-		empire.printUnits();
-		LOG.log(Level.INFO,"-------------------------------------------------------------------------------------");
-		LOG.log(Level.INFO,"----------- THE FOLLOWING METHODS WERE ADAPTED TO THE CUSTOM LINKED LIST.------------");
-		LOG.log(Level.INFO,"-------------------------------------------------------------------------------------");
-		empire.attackEnemyUnitsWithUnits(alliance);
-		empire.allUnitsRun();
+		LOG.log(Level.INFO, "Robots array: " + Arrays.toString(alliance.robotsFromSetToArray()));
 
-		LOG.log(Level.INFO,"---------QUEUE---------");
+		// ---------QUEUE---------
 		famousQuotes.add("It's a trap!");
 		famousQuotes.add("May the force be with you.");
 		famousQuotes.add("No. I am your father.");
 		famousQuotes.add("Just for once, let me look on you with my own eyes.");
 		famousQuotes.add("Power! Unlimited power!");
-		LOG.log(Level.INFO,"Famous quotes: " + famousQuotes);
-		LOG.log(Level.INFO,"Is empty?: " + famousQuotes.isEmpty());
-		LOG.log(Level.INFO,"Peek: " + famousQuotes.peek());
-		famousQuotes.remove();
+
+		// STREAMS
+		LOG.log(Level.INFO, "---------STREAMS---------");
+
+		long numberOfQuotes = famousQuotes.stream().count();
+		LOG.log(Level.INFO, "The number of quotes is: " + numberOfQuotes);
+		LOG.log(Level.INFO, famousQuotes.stream().findFirst().get());
+		famousQuotes.stream().filter(str -> str.length() < 25).forEach(str -> LOG.log(Level.INFO, str));
+
+		// enums
+		LOG.log(Level.INFO, "---------ENUMS---------");
+
+		LOG.log(Level.INFO, darthVader.getSide().getGoodOrEvil());
+		LOG.log(Level.INFO, "The location of the empire is: " + empire.getLocation());
+		LOG.log(Level.INFO, darthVader.getLeader().printPhrase());
+
+		// LAMBDAS
+		LOG.log(Level.INFO, "---------LAMBDAS---------");
+
+		// use of lambda function distanceBetweenPlanetHome
+		int distance = empire.getLocation().distanceBetweenPlanetHome(Planets.ENDOR.getKm());
+		LOG.log(Level.INFO, "The distance between the planet " + empire.getLocation() + " from " + Planets.ENDOR
+				+ " is " + distance + " km.");
+
+		// use of lambda as a getter
+		Function<Unit, Integer> getStamina = Unit::getStamina;
+		LOG.log(Level.INFO, "The stamina of the unit is: " + getStamina.apply(soldierR2));
+
+		soldierR1.attack(soldierE2);
+		for (int i = 0; i < unitsE.size(); i++) {
+			SpaceArmy.healUnits(empire.getUnits().get(i), unit -> unit.getHealth() < unit.getMaxHealth());
+		}
+
+		SpaceArmy.modifyUnit(lukeSkywalker, unit -> unit.setUnitId(5));
+
+		SpaceArmy.modifyTwoUnits(lukeSkywalker, darthVader, (unit1, unit2) -> {
+			unit1.setStamina(500);
+			unit2.setHealth(400);
+		});
+
+		for (int i = 0; i < unitsE.size(); i++) {
+			SpaceArmy.getUnitIf(unitsE.get(i), unit -> {
+				if (SpaceArmy.isTrue(unit, unit_ -> unit_.getUnitId() == 2))
+					return unit;
+				return null;
+			});
+		}
+
+		SpaceArmy.modifyRobot(r2d2, robot -> alliance.getRobots().remove(r2d2));
+
+		LOG.log(Level.INFO, "The total is: " + SpaceArmy.getTotalIntegersOf3Units(soldierR2, soldierR3, lukeSkywalker,
+				(unit1, unit2, unit3) -> unit1.getHealth() + unit2.getHealth() + unit3.getHealth()));
+
 	}
 }

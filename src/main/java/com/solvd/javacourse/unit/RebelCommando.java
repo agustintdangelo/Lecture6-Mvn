@@ -3,15 +3,22 @@ package com.solvd.javacourse.unit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.solvd.javacourse.enums.Side;
+
 public class RebelCommando extends Unit {
 
 	private final static Logger LOG = Logger.getLogger(RebelCommando.class.getName());
+	private static final int MAX_HEALTH = 125;
 
-	public RebelCommando(int unitId) {
-		super(unitId);
+	public RebelCommando(int unitId, Side side) {
+		super(unitId, side);
 		this.health = 125;
 		this.stamina = 125;
-		this.side = "Alliance";
+	}
+
+	@Override
+	public int getMaxHealth() {
+		return MAX_HEALTH;
 	}
 
 	@Override

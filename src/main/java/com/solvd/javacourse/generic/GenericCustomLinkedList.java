@@ -1,9 +1,10 @@
 package com.solvd.javacourse.generic;
 
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GenericCustomLinkedList<T> {
+public class GenericCustomLinkedList<T> implements Iterable<Node<T>> {
 	private final static Logger LOG = Logger.getLogger(GenericCustomLinkedList.class.getName());
 	Node<T> head;
 
@@ -35,10 +36,10 @@ public class GenericCustomLinkedList<T> {
 			return size;
 		} else {
 //	        while(currentNode != null) {
-//	            System.out.print(currentNode.data + " ");
+//	            size++;
 //	            currentNode = currentNode.next;
 //	        }
-			size = sizeRecursion(currentNode);
+			size = sizeRecursion(currentNode); // NO
 		}
 		return size;
 	}
@@ -108,6 +109,41 @@ public class GenericCustomLinkedList<T> {
 		}
 	}
 
+	public void deleteData(T data) {
+		// Case1: when there is no element in LinkedList
+//        if(head==null){  //means LinkedList in empty, throw exception.              
+//               throw new LinkedListEmptyException("LinkedList doesn't contain any Nodes.");
+//        }
+
+		// Case2: when there is only one element in LinkedList- check whether we have to
+		// delete that Node or not.
+		if (head.data == data) { // means LinkedList consists of only one element, delete that.
+			Node<T> tempNode = head; // save reference to first Node in tempNode- so that we could return saved
+										// reference.
+			head = head.next;
+			System.out.println("Node with data=" + tempNode.data + " was found on first and has been deleted.");
+		} else {
+			Node<T> previous = null;
+			Node<T> current = head;
+			while (current != null && current.data != data) {
+				if (current.next == null) { // Means Node wasn't found.
+					System.out.println("Node with data=" + data + " wasn't found for deletion.");
+				}
+				previous = current;
+				current = current.next;
+			}
+			if (current.data == data) {
+				System.out.println("Node with data=" + current.data + " has been deleted.");
+				previous.next = current.next; // make previous node's next point to current node's next. //return
+												// deleted
+				// Node.
+			}
+		}
+
+		// Case3: when there are atLeast two elements in LinkedList
+
+	}
+
 	public void deleteAt(int index) {
 		if (index == 0) {
 			head = head.next;
@@ -166,6 +202,12 @@ public class GenericCustomLinkedList<T> {
 	@Override
 	public String toString() {
 		return "[" + toStringNodes() + "]";
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public Iterator<Node<T>> iterator() {
+		return new ListIterator(head);
 	}
 
 }
